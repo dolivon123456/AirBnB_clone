@@ -6,4 +6,5 @@
 ## Description of the command interpreter:
    - how to start it 
    - how to use it 
+   - how to store, update retrieve and destroy data
    - examples 
