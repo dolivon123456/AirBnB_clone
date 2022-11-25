@@ -1,12 +1,15 @@
 #!/usr/bin/python3
-"""BaseModel module"""
+"""
+BaseModel module
+"""
 
 import uuid
 import models
+from json import JSONEncoder
 from datetime import datetime
 
 class BaseModel():
-    """BaseModel"""
+    """BaseModel class"""
     
     def __init__(self, *args, **kwargs):
         """Initialize the class instances"""
@@ -14,7 +17,9 @@ class BaseModel():
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, DATE_TIME_FORMAT)
+                    value = datetime.strptime(
+                            value, 
+                            DATE_TIME_FORMAT)
                 elif key == "__class__":
                     continue
             
@@ -41,5 +46,14 @@ def to_dict(self):
     new_dict['updated_at] = new_dict['updated_at].isoformat()
     new_dict['__class__'] = self.__class__.__name__
     return new_dict
-        
-            
+
+
+class BaseModelEncoder(JSONEncoder):
+    """
+    JSONEncoder for base model
+    """
+    def default(self, o):
+        """default module"""
+        if isinstance(o, BaseModule):
+            return o.to_dict()
+        return supper().default(o)
