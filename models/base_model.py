@@ -3,9 +3,8 @@
 BaseModel module
 """
 
-import uuid
+from uuid import uuid4
 import models
-from json import JSONEncoder
 from datetime import datetime
 
 class BaseModel():
@@ -14,25 +13,22 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """Initialize the class instances"""
         DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(
-                            value, 
-                            DATE_TIME_FORMAT)
-                elif key == "__class__":
-                    continue
-            
-                setattr(self, key, value)
+         self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, DATE_TIME_FORMAT)
+                else:
+                    self.__dict__[k] = v
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             models.storage.new(self)
             
 def __str__(self):
     """Returns a formatted string"""
-    return ("[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__))
+     clname = self.__class__.__name__
+     return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
 
 def save(self):
     """updates the public instance attribute"""
@@ -42,8 +38,8 @@ def save(self):
 def to_dict(self):
     """ returns a dictionary containing all keys/values"""
     new_dict = self.__dict__.copy()
-    new_dict['created_at] = new_dict['created_at].isoformat()
-    new_dict['updated_at] = new_dict['updated_at].isoformat()
+    new_dict['created_at'] = self.created_at.isoformat()
+    new_dict['updated_at'] = self.updated_at.isoformat()
     new_dict['__class__'] = self.__class__.__name__
     return new_dict
 
