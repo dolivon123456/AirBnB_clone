@@ -5,6 +5,7 @@ The class FileStorage module
 
 import os.path
 import json
+import models
 
 class FileStorage:
   """ 
