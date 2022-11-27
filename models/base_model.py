@@ -33,8 +33,8 @@ class BaseModel():
          """
          Returns a formatted string
          """
-            clname = self.__class__.__name__
-            return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
+         clname = self.__class__.__name__
+         return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
      
     def save(self):
         """
