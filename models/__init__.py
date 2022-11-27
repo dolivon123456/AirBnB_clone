@@ -2,9 +2,8 @@
 """
 create a unique FileStorage instance for your application
 """
-
 from models.engine.file_storage import FileStorage
 
 
 storage = FileStorage()
-FileStorage.reload()
+storage.reload()
