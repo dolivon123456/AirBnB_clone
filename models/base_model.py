@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+g!/usr/bin/python3
 """A module that implements the BaseModel class"""
 
 from uuid import uuid4
